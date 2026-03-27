@@ -1,10 +1,5 @@
 import { webringData, type WebringMember } from "@/data/webringData";
-import {
-  GITHUB_PULLS,
-  GITHUB_REPO,
-  SITE_ORIGIN,
-  TAMU_URL,
-} from "@/lib/site";
+import { GITHUB_PULLS, GITHUB_REPO, TAMU_URL } from "@/lib/site";
 
 function hostnameOnly(website: string): string {
   try {
