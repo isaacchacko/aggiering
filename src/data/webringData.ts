@@ -5,4 +5,10 @@ export type WebringMember = {
   year: string;
 };
 
-export const webringData: WebringMember[] = [];
+export const webringData: WebringMember[] = [
+  {
+    name: "Isaac Chacko",
+    website: "https://isaacchacko.com",
+    year: "2028"
+  }
+];
