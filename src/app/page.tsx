@@ -85,54 +85,60 @@ export default function Home() {
       </div>
 
       <div className="mt-10 flex flex-col gap-8 text-[15px]">
-        <p className="text-xs font-medium uppercase tracking-wide text-neutral-500">
-          {totalCount} {totalCount === 1 ? "member" : "members"} total
-        </p>
-        {byYear.map(({ year, members }) => (
-          <section key={year} className="flex flex-col gap-4">
-            <h2 className="text-xs font-medium uppercase tracking-wide text-neutral-500">
-              <span>{year}</span>
-              <span className="ml-2 tabular-nums text-neutral-400">
-                ({members.length})
-              </span>
-            </h2>
-            <div className="flex flex-col gap-4">
-              {members.map((m) => {
-                const host = hostnameOnly(m.website);
-                const fav = faviconFor(m.website);
-                return (
-                  <div key={m.website} className="flex flex-row items-center gap-3">
-                    {fav ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={fav}
-                        alt=""
-                        width={16}
-                        height={16}
-                        className="block shrink-0"
-                        loading="lazy"
-                      />
-                    ) : (
-                      <span className="inline-block h-4 w-4 shrink-0" aria-hidden />
-                    )}
-                    <p className="text-neutral-800">
-                      {m.name}
-                      {" // "}
-                      <a
-                        href={m.website}
-                        className="text-maroon underline underline-offset-2"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {host}
-                      </a>
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
-          </section>
-        ))}
+        {totalCount === 0 ? (
+          <p className="text-neutral-600">Aw man! No websites.</p>
+        ) : (
+          <>
+            <p className="text-xs font-medium uppercase tracking-wide text-neutral-500">
+              {totalCount} {totalCount === 1 ? "member" : "members"} total
+            </p>
+            {byYear.map(({ year, members }) => (
+              <section key={year} className="flex flex-col gap-4">
+                <h2 className="text-xs font-medium uppercase tracking-wide text-neutral-500">
+                  <span>{year}</span>
+                  <span className="ml-2 tabular-nums text-neutral-400">
+                    ({members.length})
+                  </span>
+                </h2>
+                <div className="flex flex-col gap-4">
+                  {members.map((m) => {
+                    const host = hostnameOnly(m.website);
+                    const fav = faviconFor(m.website);
+                    return (
+                      <div key={m.website} className="flex flex-row items-center gap-3">
+                        {fav ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img
+                            src={fav}
+                            alt=""
+                            width={16}
+                            height={16}
+                            className="block shrink-0"
+                            loading="lazy"
+                          />
+                        ) : (
+                          <span className="inline-block h-4 w-4 shrink-0" aria-hidden />
+                        )}
+                        <p className="text-neutral-800">
+                          {m.name}
+                          {" // "}
+                          <a
+                            href={m.website}
+                            className="text-maroon underline underline-offset-2"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {host}
+                          </a>
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </section>
+            ))}
+          </>
+        )}
       </div>
     </div>
   );
