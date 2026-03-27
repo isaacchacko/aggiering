@@ -8,7 +8,7 @@ export type WebringMember = {
 export const webringData: WebringMember[] = [
   {
     name: "Isaac Chacko",
-    website: "isaacchacko.com",
+    website: "https://isaacchacko.com",
     year: "2028"
   }
 ];
