@@ -1,36 +1,108 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# aggier.ing
 
-## Getting Started
+**aggier.ing** is a minimal [webring](https://en.wikipedia.org/wiki/Webring) for Texas A&M students and alumni with personal sites. The hub is a single static page: a short blurb and a list of links (with favicons). Member data lives in `webringData.ts` only. Optional prev/next navigation still works via `location.hash` on the hub (see **Redirect behavior** below).
 
-First, run the development server:
+## Tech
+
+- [Next.js 14](https://nextjs.org/) (App Router) with **`output: 'export'`** for a fully static site
+- **`next.config.mjs`** is what Next.js 14 actually loads. **`next.config.ts`** mirrors the same options for TypeScript reference — keep them in sync if you change export settings.
+- TypeScript, Tailwind CSS
+- Member list: `src/data/webringData.ts`
+
+## Local development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000). Edit `src/data/webringData.ts` or components under `src/` as needed.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Production build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+```
 
-## Learn More
+Static files are emitted to the `out/` directory.
 
-To learn more about Next.js, take a look at the following resources:
+## Deploy to Vercel
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Connect the repo to [Vercel](https://vercel.com/) and deploy with defaults. The project uses static export; no Node server is required.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Update **`src/lib/site.ts`**: set `SITE_ORIGIN` for your deployed URL, and `GITHUB_REPO` / `GITHUB_PULLS` so the on-page links point at your repository.
 
-## Deploy on Vercel
+## Deploy to GitHub Pages
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+GitHub Pages serves your site from a branch or from GitHub Actions. With Next static export, you upload the contents of **`out/`**.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. In `next.config.mjs`, set **`basePath`** to your repository name if the site is not at the root of the domain. Example for `https://username.github.io/aggiering/`:
+
+   ```js
+   /** @type {import('next').NextConfig} */
+   const nextConfig = {
+     output: "export",
+     basePath: "/aggiering",
+     assetPrefix: "/aggiering/",
+     images: { unoptimized: true },
+   };
+   export default nextConfig;
+   ```
+
+2. Build: `npm run build`.
+
+3. Publish the **`out/`** folder (e.g. push to `gh-pages` or use [actions/upload-pages-artifact](https://github.com/actions/upload-pages-artifact)).
+
+4. In **`src/lib/site.ts`**, set `SITE_ORIGIN` to your real public URL (including path if you use `basePath`).
+
+5. Regenerate or hand-edit widget URLs on member sites so `href` values match the deployed base (same origin as the hub).
+
+## How to join
+
+1. **Fork** this repository and add your entry to the **bottom** of `src/data/webringData.ts` (`name`, `website`, `year` for graduation).
+2. Open a **pull request** and complete the checklist in `.github/pull_request_template.md`.
+
+More detail: [`public/CONTRIBUTING.md`](./public/CONTRIBUTING.md).
+
+## Optional webring widget
+
+If you want prev/next links on your own site, point them at the hub with your `website` URL in the hash (encode with `encodeURIComponent`). Example hub: `https://aggier.ing`. Icons: `/icon.maroon.svg` on the hub.
+
+## Repository layout
+
+```
+aggiering/
+├── src/
+│   ├── app/
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   └── globals.css
+│   ├── data/
+│   │   └── webringData.ts
+│   ├── lib/
+│   │   ├── site.ts
+│   │   ├── webringNavigation.ts
+│   │   └── webringRedirectScript.ts
+│   └── components/
+│       └── RedirectHandler.tsx
+├── public/
+│   ├── icon.maroon.svg
+│   ├── icon.white.svg
+│   ├── icon.black.svg
+│   ├── og.svg
+│   └── CONTRIBUTING.md
+├── .github/
+│   └── pull_request_template.md
+├── next.config.mjs
+├── next.config.ts
+├── tailwind.config.ts
+└── README.md
+```
+
+## Redirect behavior
+
+On load, the hub reads `window.location.hash`. If it contains a member URL and `?nav=prev` or `?nav=next`, the page **replaces** the location with the previous or next `website` in `webringData` (wrapping at the ends). If there is no navigable hash, the **directory** page is shown. An early **beforeInteractive** script plus a small React helper avoid flashing the directory before a redirect.
+
+## License
+
+Add a license file if you open-source the repo publicly.
