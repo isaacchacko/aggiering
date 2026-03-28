@@ -32,9 +32,6 @@ export const metadata: Metadata = {
     description: "A minimal webring for Aggies with personal sites.",
     images: ["/splash.svg"],
   },
-  icons: {
-    icon: "/aggiering-maroon.svg",
-  },
 };
 
 export default function RootLayout({
