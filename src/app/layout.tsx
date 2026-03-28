@@ -1,13 +1,7 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
-import Script from "next/script";
 import "./globals.css";
-import { webringData } from "@/data/webringData";
-import { buildWebringRedirectScript } from "@/lib/webringRedirectScript";
-import { RedirectHandler } from "@/components/RedirectHandler";
 import { SITE_ORIGIN } from "@/lib/site";
-
-const siteUrls = webringData.map((m) => m.website);
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_ORIGIN),
@@ -25,7 +19,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/og.svg",
+        url: "/splash.svg",
         width: 1200,
         height: 630,
         alt: "aggier.ing",
@@ -36,10 +30,10 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "aggier.ing",
     description: "A minimal webring for Aggies with personal sites.",
-    images: ["/og.svg"],
+    images: ["/splash.svg"],
   },
   icons: {
-    icon: "/icon.maroon.svg",
+    icon: "/aggiering-maroon.svg",
   },
 };
 
@@ -51,18 +45,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-sans antialiased">
-        <Script
-          id="aggiering-redirect"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: buildWebringRedirectScript([...siteUrls]),
-          }}
-        />
-        <noscript>
-          <style>{`.aggiering-main { visibility: visible !important; }`}</style>
-        </noscript>
-        <RedirectHandler />
         {children}
+        <Analytics />
       </body>
     </html>
   );

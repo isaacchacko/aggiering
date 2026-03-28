@@ -35,39 +35,51 @@ export default function Home() {
   const totalCount = webringData.length;
 
   return (
-    <div className="aggiering-main mx-auto max-w-xl px-4 py-12 text-[15px] leading-relaxed text-neutral-800">
-      <h1 className="flex items-center gap-2.5 text-2xl font-semibold text-neutral-900 italic">
+    <div className="aggiering-main mx-auto max-w-xl px-4 py-10 text-sm leading-relaxed text-neutral-800 sm:py-12 sm:text-[15px] md:text-base lg:text-lg">
+      <h1 className="flex items-center gap-2 text-xl font-semibold text-neutral-900 italic sm:gap-2.5 sm:text-2xl md:text-3xl">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/icon.maroon.svg"
+          src="/aggiering-maroon.svg"
           alt=""
           width={26}
           height={26}
-          className="shrink-0"
+          className="h-[22px] w-[22px] shrink-0 sm:h-[26px] sm:w-[26px] md:h-7 md:w-7"
         />
         <span>aggier.ing</span>
       </h1>
 
-      <div className="mt-6 space-y-4 text-neutral-600">
+      <div className="mt-5 space-y-3 text-neutral-600 sm:mt-6 sm:space-y-4">
 
         <p>
           <a
             href="https://en.wikipedia.org/wiki/Webring"
             className="text-maroon underline underline-offset-2 italic"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             What&apos;s a webring?
           </a>
         </p>
         <p>
           Howdy! Welcome to an unofficial webring for students and alumni from{" "}
-          <a href={TAMU_URL} className="text-maroon underline underline-offset-2">
+          <a
+            href={TAMU_URL}
+            className="text-maroon underline underline-offset-2"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Texas A&amp;M University
           </a>{" "}
           with personal sites/portfolios.
         </p>
         <p>
           Want to add your site? {" "}
-          <a href={GITHUB_PULLS} className="italic text-maroon underline underline-offset-2">
+          <a
+            href={GITHUB_PULLS}
+            className="italic text-maroon underline underline-offset-2"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Open a PR here!</a>
 
         </p>
@@ -78,23 +90,29 @@ export default function Home() {
           - Isaac
         </p>
         <p>
-          <a href={GITHUB_REPO} className="text-maroon underline underline-offset-2">
-
+          <a
+            href={GITHUB_REPO}
+            className="text-maroon underline underline-offset-2"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
           </a>
         </p>
       </div>
 
-      <div className="mt-10 flex flex-col gap-8 text-[15px]">
+      <hr className="mt-8 border-t border-neutral-200 sm:mt-10" />
+
+      <div className="mt-6 flex flex-col gap-6 sm:mt-8 sm:gap-8">
         {totalCount === 0 ? (
           <p className="text-neutral-600">Aw man! No websites.</p>
         ) : (
           <>
-            <p className="text-xs font-medium uppercase tracking-wide text-neutral-500">
+            <p className="text-[11px] font-medium uppercase tracking-wide text-neutral-500 sm:text-xs md:text-sm">
               {totalCount} {totalCount === 1 ? "member" : "members"} total
             </p>
             {byYear.map(({ year, members }) => (
-              <section key={year} className="flex flex-col gap-4">
-                <h2 className="text-xs font-medium uppercase tracking-wide text-neutral-500">
+              <section key={year} className="flex flex-col gap-3 sm:gap-4">
+                <h2 className="text-[11px] font-medium uppercase tracking-wide text-neutral-500 sm:text-xs md:text-sm">
                   <span>{year}</span>
                   <span className="ml-2 tabular-nums text-neutral-400">
                     ({members.length})

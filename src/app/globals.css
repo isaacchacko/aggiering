@@ -12,15 +12,6 @@ body {
   background: var(--background);
 }
 
-/* Hide directory until redirect check completes (see inline script + RedirectHandler). */
-.aggiering-main {
-  visibility: hidden;
-}
-
-html[data-aggiering-ready="1"] .aggiering-main {
-  visibility: visible;
-}
-
 @layer utilities {
   .text-balance {
     text-wrap: balance;
