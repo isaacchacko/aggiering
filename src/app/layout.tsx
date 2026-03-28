@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/og.svg",
+        url: "/og.png",
         width: 1200,
         height: 630,
         alt: "aggier.ing",
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "aggier.ing",
     description: "A minimal webring for Aggies with personal sites.",
-    images: ["/og.svg"],
+    images: ["/og.png"],
   },
 };
 

@@ -1,4 +1,4 @@
-![aggier.ing Open Graph graphic](./public/og.svg)
+![aggier.ing Open Graph graphic](./public/og.png)
 
 # [aggier.ing](https://aggier.ing)
 
