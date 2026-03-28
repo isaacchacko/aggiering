@@ -11,3 +11,12 @@ export const GITHUB_PULLS = `${GITHUB_REPO}/blob/main/README.md`;
 
 /** Texas A&M University */
 export const TAMU_URL = "https://www.tamu.edu/";
+
+/** Owner and repo name parsed from `GITHUB_REPO` (override with env in server code if needed). */
+export function getGithubRepoParts(): { owner: string; repo: string } {
+  const m = GITHUB_REPO.match(/github\.com\/([^/]+)\/([^/]+?)(?:\.git)?(?:\/|$)/);
+  if (!m) {
+    throw new Error("Invalid GITHUB_REPO");
+  }
+  return { owner: m[1], repo: m[2] };
+}

@@ -6,7 +6,7 @@
 
 Howdy! Welcome to an unofficial webring for students and alumni from [Texas A&M University](https://www.tamu.edu/) with personal sites/portfolios.
 
-Want to add your site to the list? Edit [`src/data/webringData.ts`](https://github.com/isaacchacko/aggiering/blob/main/src/data/webringData.ts) (pencil icon on GitHub) and add your information at the **bottom** of the list. You can also add a link to [aggier.ing](https://aggier.ing) on your site so others can find the webring—see **Adding a link to your website** below.
+Want to add your site to the list? Use the **Add your site** form on [the home page](https://aggier.ing/) (opens a GitHub pull request for a maintainer to review), or edit [`src/data/webringData.ts`](https://github.com/isaacchacko/aggiering/blob/main/src/data/webringData.ts) (pencil icon on GitHub) and add your information at the **bottom** of the list. You can also add a link to [aggier.ing](https://aggier.ing) on your site so others can find the webring—see **Adding a link to your website** below.
 
 Hope you like it! If you have any questions or feedback, feel free to reach out.
 
@@ -94,3 +94,49 @@ export function AggieringBadge() {
 ### Self-hosting the SVG
 
 Download [`aggiering-maroon.svg`](./public/aggiering-maroon.svg) (or black/white) from this repo, place it in your site’s static assets, and set `src` to your own path instead of `https://aggier.ing/...`.
+
+## Maintainer: join form & deployment (Vercel)
+
+The site can open **pull requests automatically** when someone submits the home page join form. After you **merge** a PR to `main`, your usual **Vercel** production deployment runs as before.
+
+### GitHub token
+
+Create a **fine-grained personal access token** (or use a dedicated bot account) with access limited to this repository:
+
+- **Contents**: Read and write (to commit `src/data/webringData.ts` on a branch)
+- **Pull requests**: Read and write (to open the PR)
+- **Metadata**: Read (default)
+
+Set in Vercel (and locally if you test the API):
+
+| Variable | Description |
+|----------|-------------|
+| `GITHUB_TOKEN` | The token secret (never commit it). |
+| `GITHUB_REPO_OWNER` | Optional. GitHub org or user that owns the repo (defaults to parsing [`src/lib/site.ts`](./src/lib/site.ts) `GITHUB_REPO`). |
+| `GITHUB_REPO_NAME` | Optional. Repository name (same default as above). |
+
+### Cloudflare Turnstile (spam protection)
+
+**Production** requires Turnstile: create a widget in the Cloudflare dashboard and set:
+
+| Variable | Description |
+|----------|-------------|
+| `TURNSTILE_SECRET_KEY` | Server-side secret for `/api/webring/join` verification. |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Site key (public) for the client widget. |
+
+For **local development**, you can omit Turnstile keys; verification is skipped when `TURNSTILE_SECRET_KEY` is unset and `NODE_ENV` is `development`.
+
+### Rate limiting (optional, recommended for production)
+
+Without extra configuration, the API uses a **best-effort in-memory** limiter (not reliable across many serverless instances). For consistent limits, provision **Upstash Redis** and set:
+
+| Variable | Description |
+|----------|-------------|
+| `UPSTASH_REDIS_REST_URL` | From Upstash (or Vercel KV compatible REST URL). |
+| `UPSTASH_REDIS_REST_TOKEN` | Matching token. |
+
+The join endpoint allows **5 requests per IP per hour** (sliding window) when Upstash is configured.
+
+### Checks
+
+Run `npm run test` before shipping changes to the join helper (`src/lib/webringFileEdit.ts`, validation, or API).

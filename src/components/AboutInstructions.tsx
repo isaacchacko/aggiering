@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { GITHUB_REPO, GITHUB_WEBRING_DATA, SITE_ORIGIN, TAMU_URL } from "@/lib/site";
 
 const EXAMPLE_ENTRY = `{
@@ -78,55 +79,15 @@ function FieldTable({
 export function AboutInstructions() {
   return (
     <>
-      <div className="mt-6 space-y-3 text-neutral-600 sm:mt-8 sm:space-y-4">
-        <p>
-          <a
-            href="https://en.wikipedia.org/wiki/Webring"
-            className="italic text-maroon underline underline-offset-2"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            What&apos;s a webring?
-          </a>
-        </p>
-        <p>
-          Howdy! Welcome to an unofficial webring for students and alumni from{" "}
-          <a
-            href={TAMU_URL}
-            className="text-maroon underline underline-offset-2"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Texas A&amp;M University
-          </a>{" "}
-          with personal sites/portfolios.
-        </p>
-        <p>
-          Want to add your site to the list? Edit{" "}
-          <a
-            href={GITHUB_WEBRING_DATA}
-            className="text-maroon underline underline-offset-2"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <code className="text-[0.95em]">src/data/webringData.ts</code>
-          </a>{" "}
-          and add your information at the <strong className="font-semibold text-neutral-800">bottom</strong> of the
-          list. You can also add a link to{" "}
-          <a href={SITE_ORIGIN} className="text-maroon underline underline-offset-2">
-            aggier.ing
-          </a>{" "}
-          on your site so others can find the webring—see{" "}
-          <a href="#adding-a-link-to-your-website" className="text-maroon underline underline-offset-2">
-            Adding a link to your website
-          </a>{" "}
-          below.
-        </p>
-        <p>Hope you like it! If you have any questions or feedback, feel free to reach out.</p>
-      </div>
-
       <section className="mt-8 space-y-4 text-neutral-600 sm:mt-10 sm:space-y-5">
         <h2 className="text-base font-semibold text-neutral-900 sm:text-lg">Adding your website / opening a PR</h2>
+        <p>
+          You can use the <strong className="font-semibold text-neutral-800">Add your site</strong> form on the{" "}
+          <Link href="/" className="text-maroon underline underline-offset-2">
+            Home
+          </Link>{" "}
+          tab to open a pull request automatically, or follow these steps manually on GitHub.
+        </p>
         <p>If this is your first time making a PR, no worries—follow these steps.</p>
         <ol className="list-decimal space-y-2 pl-5 marker:text-neutral-500">
           <li>

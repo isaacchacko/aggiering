@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { JoinForm } from "@/components/JoinForm";
 import { webringData, type WebringMember } from "@/data/webringData";
 import { GITHUB_WEBRING_DATA, SITE_ORIGIN, TAMU_URL } from "@/lib/site";
 
@@ -83,6 +84,8 @@ export default function Home() {
         </p>
         <p>Hope you like it! If you have any questions or feedback, feel free to reach out.</p>
       </div>
+
+      <JoinForm />
 
       <hr className="mt-8 border-t border-neutral-200 sm:mt-10" />
 
