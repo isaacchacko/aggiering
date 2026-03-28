@@ -15,5 +15,5 @@ export const webringData: WebringMember[] = [
     name: "Kavya Agar",
     website: "https://kavyaagar.com",
     year: "2028"
-  }
+  },
 ];
