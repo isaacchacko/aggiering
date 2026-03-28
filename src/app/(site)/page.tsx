@@ -1,5 +1,6 @@
+import Link from "next/link";
 import { webringData, type WebringMember } from "@/data/webringData";
-import { GITHUB_PULLS, GITHUB_REPO, TAMU_URL } from "@/lib/site";
+import { GITHUB_WEBRING_DATA, SITE_ORIGIN, TAMU_URL } from "@/lib/site";
 
 function hostnameOnly(website: string): string {
   try {
@@ -35,25 +36,12 @@ export default function Home() {
   const totalCount = webringData.length;
 
   return (
-    <div className="aggiering-main mx-auto max-w-xl px-4 py-10 text-sm leading-relaxed text-neutral-800 sm:py-12 sm:text-[15px] md:text-base lg:text-lg">
-      <h1 className="flex items-center gap-2 text-xl font-semibold text-neutral-900 italic sm:gap-2.5 sm:text-2xl md:text-3xl">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/aggiering-maroon.svg"
-          alt=""
-          width={26}
-          height={26}
-          className="h-[22px] w-[22px] shrink-0 sm:h-[26px] sm:w-[26px] md:h-7 md:w-7"
-        />
-        <span>aggier.ing</span>
-      </h1>
-
-      <div className="mt-5 space-y-3 text-neutral-600 sm:mt-6 sm:space-y-4">
-
+    <>
+      <div className="mt-6 space-y-3 text-neutral-600 sm:mt-8 sm:space-y-4">
         <p>
           <a
             href="https://en.wikipedia.org/wiki/Webring"
-            className="text-maroon underline underline-offset-2 italic"
+            className="italic text-maroon underline underline-offset-2"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -73,31 +61,27 @@ export default function Home() {
           with personal sites/portfolios.
         </p>
         <p>
-          Want to add your site? {" "}
+          Want to add your site to the list? Edit{" "}
           <a
-            href={GITHUB_PULLS}
-            className="italic text-maroon underline underline-offset-2"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Open a PR here!</a>
-
-        </p>
-        <p>
-          Hope you like it! If you have any questions/feedback, feel free to reach out.
-        </p>
-        <p>
-          - Isaac
-        </p>
-        <p>
-          <a
-            href={GITHUB_REPO}
+            href={GITHUB_WEBRING_DATA}
             className="text-maroon underline underline-offset-2"
             target="_blank"
             rel="noopener noreferrer"
           >
-          </a>
+            <code className="text-[0.95em]">src/data/webringData.ts</code>
+          </a>{" "}
+          and add your information at the <strong className="font-semibold text-neutral-800">bottom</strong> of the
+          list. You can also add a link to{" "}
+          <a href={SITE_ORIGIN} className="text-maroon underline underline-offset-2">
+            aggier.ing
+          </a>{" "}
+          on your site—full instructions, badge snippets, and PR steps are on the{" "}
+          <Link href="/about" className="text-maroon underline underline-offset-2">
+            About
+          </Link>{" "}
+          tab.
         </p>
+        <p>Hope you like it! If you have any questions or feedback, feel free to reach out.</p>
       </div>
 
       <hr className="mt-8 border-t border-neutral-200 sm:mt-10" />
@@ -158,6 +142,6 @@ export default function Home() {
           </>
         )}
       </div>
-    </div>
+    </>
   );
 }

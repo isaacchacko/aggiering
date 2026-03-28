@@ -4,6 +4,9 @@ export const SITE_ORIGIN = "https://aggier.ing";
 /** Set this to your GitHub repository (source + PRs). Repo slug may differ from the public domain. */
 export const GITHUB_REPO = "https://github.com/isaacchacko/aggiering";
 
+/** `src/data/webringData.ts` on GitHub (edit / pencil icon → fork → PR). */
+export const GITHUB_WEBRING_DATA = `${GITHUB_REPO}/blob/main/src/data/webringData.ts`;
+
 export const GITHUB_PULLS = `${GITHUB_REPO}/blob/main/README.md`;
 
 /** Texas A&M University */
