@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { GITHUB_REPO, GITHUB_WEBRING_DATA, SITE_ORIGIN, TAMU_URL } from "@/lib/site";
+import { CodeBlock } from "@/components/CodeBlock";
+import { GITHUB_REPO, GITHUB_WEBRING_DATA, SITE_ORIGIN } from "@/lib/site";
 
 const EXAMPLE_ENTRY = `{
   name: "Your Name",
@@ -33,14 +33,6 @@ const BADGE_TSX = [
   "}",
 ].join("\n");
 
-function CodeBlock({ children }: { children: string }) {
-  return (
-    <pre className="overflow-x-auto rounded-md border border-neutral-200 bg-neutral-50 p-3 text-[11px] leading-relaxed text-neutral-800 sm:text-xs md:text-[13px]">
-      <code className="font-mono">{children}</code>
-    </pre>
-  );
-}
-
 function FieldTable({
   rows,
 }: {
@@ -48,13 +40,13 @@ function FieldTable({
 }) {
   return (
     <div className="overflow-x-auto">
-      <table className="w-full min-w-[280px] border-collapse border border-neutral-200 text-left text-[13px] sm:text-sm">
+      <table className="w-full min-w-[280px] border-collapse border border-neutral-200 text-left text-[13px] dark:border-neutral-600 sm:text-sm">
         <thead>
-          <tr className="bg-neutral-50">
-            <th className="border border-neutral-200 px-2 py-1.5 font-medium text-neutral-900 sm:px-3 sm:py-2">
+          <tr className="bg-neutral-50 dark:bg-neutral-900">
+            <th className="border border-neutral-200 px-2 py-1.5 font-medium text-neutral-900 dark:border-neutral-600 dark:text-neutral-100 sm:px-3 sm:py-2">
               Field
             </th>
-            <th className="border border-neutral-200 px-2 py-1.5 font-medium text-neutral-900 sm:px-3 sm:py-2">
+            <th className="border border-neutral-200 px-2 py-1.5 font-medium text-neutral-900 dark:border-neutral-600 dark:text-neutral-100 sm:px-3 sm:py-2">
               Notes
             </th>
           </tr>
@@ -62,10 +54,10 @@ function FieldTable({
         <tbody>
           {rows.map(({ field, notes }) => (
             <tr key={field}>
-              <td className="border border-neutral-200 px-2 py-1.5 font-mono text-[12px] text-neutral-800 sm:px-3 sm:py-2 sm:text-[13px]">
+              <td className="border border-neutral-200 px-2 py-1.5 font-mono text-[12px] text-neutral-800 dark:border-neutral-600 dark:text-neutral-200 sm:px-3 sm:py-2 sm:text-[13px]">
                 {field}
               </td>
-              <td className="border border-neutral-200 px-2 py-1.5 text-neutral-700 sm:px-3 sm:py-2">
+              <td className="border border-neutral-200 px-2 py-1.5 text-neutral-700 dark:border-neutral-600 dark:text-neutral-300 sm:px-3 sm:py-2">
                 {notes}
               </td>
             </tr>
@@ -79,16 +71,17 @@ function FieldTable({
 export function AboutInstructions() {
   return (
     <>
-      <section className="mt-8 space-y-4 text-neutral-600 sm:mt-10 sm:space-y-5">
-        <h2 className="text-base font-semibold text-neutral-900 sm:text-lg">Adding your website / opening a PR</h2>
+      <section
+        id="add-your-website-manually"
+        className="mt-10 scroll-mt-8 space-y-4 text-neutral-600 dark:text-neutral-400 sm:mt-12 sm:space-y-5"
+      >
+        <h2 className="text-base font-semibold text-neutral-900 dark:text-neutral-100 sm:text-lg">
+          Add your website manually
+        </h2>
         <p>
-          You can use the <strong className="font-semibold text-neutral-800">Add your site</strong> form on the{" "}
-          <Link href="/" className="text-maroon underline underline-offset-2">
-            Home
-          </Link>{" "}
-          tab to open a pull request automatically, or follow these steps manually on GitHub.
+          Prefer to edit the repo yourself, or need a fork-based PR? If this is your first time making a PR, no
+          worries!
         </p>
-        <p>If this is your first time making a PR, no worries—follow these steps.</p>
         <ol className="list-decimal space-y-2 pl-5 marker:text-neutral-500">
           <li>
             Open{" "}
@@ -103,20 +96,20 @@ export function AboutInstructions() {
             in the repository.
           </li>
           <li>
-            Press the pencil icon to edit. Without write access, GitHub will fork the repo so you can open a pull
+            Press the pencil icon to edit. Without write access, GitHub will automatically fork the repo so you can open a pull
             request.
           </li>
           <li>
-            Add <strong className="font-semibold text-neutral-800">one</strong> object at the{" "}
-            <strong className="font-semibold text-neutral-800">bottom</strong> of the{" "}
+            Add             <strong className="font-semibold text-neutral-800 dark:text-neutral-200">one</strong> object at the{" "}
+            <strong className="font-semibold text-neutral-800 dark:text-neutral-200">bottom</strong> of the{" "}
             <code className="text-[0.95em]">webringData</code> array (keep the trailing comma style consistent with the
             file).
           </li>
           <li>Submit the PR.</li>
         </ol>
         <div className="space-y-2">
-          <p className="font-medium text-neutral-800">Example entry:</p>
-          <CodeBlock>{EXAMPLE_ENTRY}</CodeBlock>
+          <p className="font-medium text-neutral-800 dark:text-neutral-200">Example entry:</p>
+          <CodeBlock code={EXAMPLE_ENTRY} language="typescript" />
         </div>
         <FieldTable
           rows={[
@@ -132,11 +125,14 @@ export function AboutInstructions() {
 
       <section
         id="adding-a-link-to-your-website"
-        className="mt-8 scroll-mt-8 space-y-4 text-neutral-600 sm:mt-10 sm:space-y-5"
+        className="mt-8 scroll-mt-8 space-y-4 text-neutral-600 dark:text-neutral-400 sm:mt-10 sm:space-y-5"
       >
-        <h2 className="text-base font-semibold text-neutral-900 sm:text-lg">Adding a link to your website</h2>
+        <h2 className="text-base font-semibold text-neutral-900 dark:text-neutral-100 sm:text-lg">
+          Adding a link to your website
+        </h2>
         <p>
-          Use a normal link to <span className="font-mono text-[0.95em] text-neutral-800">{SITE_ORIGIN}</span>. To show
+          Use a normal link to{" "}
+          <span className="font-mono text-[0.95em] text-neutral-800 dark:text-neutral-200">{SITE_ORIGIN}</span>. To show
           the webring badge, point an <code className="text-[0.95em]">&lt;img&gt;</code> at one of the SVGs we host (or
           copy the file from{" "}
           <a
@@ -150,35 +146,39 @@ export function AboutInstructions() {
           in this repo and serve it yourself).
         </p>
         <div className="space-y-2">
-          <p className="font-medium text-neutral-800">Hosted badge URLs</p>
+          <p className="font-medium text-neutral-800 dark:text-neutral-200">Hosted badge URLs</p>
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[280px] border-collapse border border-neutral-200 text-left text-[13px] sm:text-sm">
+            <table className="w-full min-w-[280px] border-collapse border border-neutral-200 text-left text-[13px] dark:border-neutral-600 sm:text-sm">
               <thead>
-                <tr className="bg-neutral-50">
-                  <th className="border border-neutral-200 px-2 py-1.5 font-medium text-neutral-900 sm:px-3 sm:py-2">
+                <tr className="bg-neutral-50 dark:bg-neutral-900">
+                  <th className="border border-neutral-200 px-2 py-1.5 font-medium text-neutral-900 dark:border-neutral-600 dark:text-neutral-100 sm:px-3 sm:py-2">
                     Variant
                   </th>
-                  <th className="border border-neutral-200 px-2 py-1.5 font-medium text-neutral-900 sm:px-3 sm:py-2">
+                  <th className="border border-neutral-200 px-2 py-1.5 font-medium text-neutral-900 dark:border-neutral-600 dark:text-neutral-100 sm:px-3 sm:py-2">
                     URL
                   </th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td className="border border-neutral-200 px-2 py-1.5 sm:px-3 sm:py-2">Maroon (default)</td>
-                  <td className="border border-neutral-200 px-2 py-1.5 font-mono text-[12px] text-neutral-800 sm:px-3 sm:py-2 sm:text-[13px]">
+                  <td className="border border-neutral-200 px-2 py-1.5 dark:border-neutral-600 sm:px-3 sm:py-2">
+                    Maroon (default)
+                  </td>
+                  <td className="border border-neutral-200 px-2 py-1.5 font-mono text-[12px] text-neutral-800 dark:border-neutral-600 dark:text-neutral-200 sm:px-3 sm:py-2 sm:text-[13px]">
                     {SITE_ORIGIN}/aggiering-maroon.svg
                   </td>
                 </tr>
                 <tr>
-                  <td className="border border-neutral-200 px-2 py-1.5 sm:px-3 sm:py-2">Black</td>
-                  <td className="border border-neutral-200 px-2 py-1.5 font-mono text-[12px] text-neutral-800 sm:px-3 sm:py-2 sm:text-[13px]">
+                  <td className="border border-neutral-200 px-2 py-1.5 dark:border-neutral-600 sm:px-3 sm:py-2">Black</td>
+                  <td className="border border-neutral-200 px-2 py-1.5 font-mono text-[12px] text-neutral-800 dark:border-neutral-600 dark:text-neutral-200 sm:px-3 sm:py-2 sm:text-[13px]">
                     {SITE_ORIGIN}/aggiering-black.svg
                   </td>
                 </tr>
                 <tr>
-                  <td className="border border-neutral-200 px-2 py-1.5 sm:px-3 sm:py-2">White (for dark backgrounds)</td>
-                  <td className="border border-neutral-200 px-2 py-1.5 font-mono text-[12px] text-neutral-800 sm:px-3 sm:py-2 sm:text-[13px]">
+                  <td className="border border-neutral-200 px-2 py-1.5 dark:border-neutral-600 sm:px-3 sm:py-2">
+                    White (for dark backgrounds)
+                  </td>
+                  <td className="border border-neutral-200 px-2 py-1.5 font-mono text-[12px] text-neutral-800 dark:border-neutral-600 dark:text-neutral-200 sm:px-3 sm:py-2 sm:text-[13px]">
                     {SITE_ORIGIN}/aggiering-white.svg
                   </td>
                 </tr>
@@ -197,19 +197,19 @@ export function AboutInstructions() {
           <code className="text-[0.95em]">height</code> so the ring stays round.
         </p>
         <div className="space-y-2">
-          <h3 className="text-sm font-semibold text-neutral-900 sm:text-base">HTML</h3>
+          <h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100 sm:text-base">HTML</h3>
           <p className="text-[13px] sm:text-sm">
             Use this in static pages, Eleventy/Hugo layouts, or inside Vue/Svelte/Astro/Nuxt templates (swap in your
             router&apos;s link component if you use one).
           </p>
-          <CodeBlock>{BADGE_HTML}</CodeBlock>
+          <CodeBlock code={BADGE_HTML} language="markup" />
         </div>
         <div className="space-y-2">
-          <h3 className="text-sm font-semibold text-neutral-900 sm:text-base">Markdown</h3>
-          <CodeBlock>{BADGE_MARKDOWN}</CodeBlock>
+          <h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100 sm:text-base">Markdown</h3>
+          <CodeBlock code={BADGE_MARKDOWN} language="markdown" />
         </div>
         <div className="space-y-2">
-          <h3 className="text-sm font-semibold text-neutral-900 sm:text-base">Typescript (.tsx)</h3>
+          <h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100 sm:text-base">Typescript (.tsx)</h3>
           <p className="text-[13px] sm:text-sm">
             Works for React, Next.js, Remix, etc. On Next.js you can use <code className="text-[0.95em]">Link</code> from{" "}
             <code className="text-[0.95em]">next/link</code> instead of <code className="text-[0.95em]">&lt;a&gt;</code>;
@@ -217,10 +217,10 @@ export function AboutInstructions() {
             in <code className="text-[0.95em]">images.remotePatterns</code> or stick to <code className="text-[0.95em]">&lt;img&gt;</code>{" "}
             (simplest for static export / external badges).
           </p>
-          <CodeBlock>{BADGE_TSX}</CodeBlock>
+          <CodeBlock code={BADGE_TSX} language="tsx" />
         </div>
         <div className="space-y-2">
-          <h3 className="text-sm font-semibold text-neutral-900 sm:text-base">Self-hosting the SVG</h3>
+          <h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100 sm:text-base">Self-hosting the SVG</h3>
           <p>
             Download{" "}
             <a
@@ -233,7 +233,7 @@ export function AboutInstructions() {
             </a>{" "}
             (or black/white) from this repo, place it in your site&apos;s static assets, and set{" "}
             <code className="text-[0.95em]">src</code> to your own path instead of{" "}
-            <span className="font-mono text-[0.95em] text-neutral-800">{SITE_ORIGIN}/...</span>.
+            <span className="font-mono text-[0.95em] text-neutral-800 dark:text-neutral-200">{SITE_ORIGIN}/...</span>.
           </p>
         </div>
       </section>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import { SITE_ORIGIN } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -40,9 +41,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="font-sans antialiased">
-        {children}
+    <html lang="en" suppressHydrationWarning>
+      <body className="min-h-screen font-sans antialiased transition-colors">
+        <ThemeProvider>{children}</ThemeProvider>
         <Analytics />
       </body>
     </html>

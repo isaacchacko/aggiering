@@ -6,13 +6,13 @@
 
 Howdy! Welcome to an unofficial webring for students and alumni from [Texas A&M University](https://www.tamu.edu/) with personal sites/portfolios.
 
-Want to add your site to the list? Use the **Add your site** form on [the home page](https://aggier.ing/) (opens a GitHub pull request for a maintainer to review), or edit [`src/data/webringData.ts`](https://github.com/isaacchacko/aggiering/blob/main/src/data/webringData.ts) (pencil icon on GitHub) and add your information at the **bottom** of the list. You can also add a link to [aggier.ing](https://aggier.ing) on your site so others can find the webring—see **Adding a link to your website** below.
+Want to add your site? Use the **Add your website** form on the [**Add Website** page](https://aggier.ing/add-website) (opens a GitHub pull request for a maintainer to review). If you prefer to edit GitHub yourself, see **Add your website manually** below. You can also add a link to [aggier.ing](https://aggier.ing) on your site so others can find the webring—see **Adding a link to your website** below.
 
 Hope you like it! If you have any questions or feedback, feel free to reach out.
 
-## Adding your website / opening a PR
+## Add your website manually
 
-If this is your first time making a PR, no worries—follow these steps.
+If you’re not using the form on [Add Website](https://aggier.ing/add-website), open the file on GitHub and follow these steps. If this is your first time making a PR, no worries—follow these steps.
 
 1. Open [`src/data/webringData.ts`](https://github.com/isaacchacko/aggiering/blob/main/src/data/webringData.ts) in the repository.
 2. Press the pencil icon to edit. Without write access, GitHub will fork the repo so you can open a pull request.
@@ -97,7 +97,7 @@ Download [`aggiering-maroon.svg`](./public/aggiering-maroon.svg) (or black/white
 
 ## Maintainer: join form & deployment (Vercel)
 
-The site can open **pull requests automatically** when someone submits the home page join form. After you **merge** a PR to `main`, your usual **Vercel** production deployment runs as before.
+The site can open **pull requests automatically** when someone submits the **Add Website** form (`/add-website`). After you **merge** a PR to `main`, your usual **Vercel** production deployment runs as before.
 
 ### GitHub token
 

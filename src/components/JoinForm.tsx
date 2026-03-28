@@ -21,7 +21,12 @@ declare global {
 
 const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
-export function JoinForm() {
+type JoinFormProps = {
+  /** When true, sits at the top of the Add Website page (tighter top spacing). */
+  isPageLead?: boolean;
+};
+
+export function JoinForm({ isPageLead }: JoinFormProps) {
   const baseId = useId();
   const turnstileRef = useRef<HTMLDivElement>(null);
   const turnstileRendered = useRef(false);
@@ -113,22 +118,26 @@ export function JoinForm() {
   const submitBlocked =
     status === "loading" || (turnstileEnabled && turnstileToken.length === 0);
 
+  const sectionMargin = isPageLead ? "mt-6 sm:mt-6" : "mt-8 sm:mt-10";
+
   return (
-    <section className="mt-8 rounded-lg border border-neutral-200 bg-white p-4 shadow-sm sm:mt-10 sm:p-5">
-      <h2 className="text-base font-semibold text-neutral-900 sm:text-lg">Add your site</h2>
-      <p className="mt-2 text-[13px] text-neutral-600 sm:text-sm">
-        Submit the form to open a pull request on GitHub. A maintainer will review it before it goes live.
+    <section
+      className={`${sectionMargin} rounded-lg border border-neutral-200 bg-white p-4 shadow-sm dark:border-neutral-700 dark:bg-neutral-900 sm:p-5`}
+    >
+      <h2 className="text-base font-semibold text-neutral-900 dark:text-neutral-100 sm:text-lg">Add your website</h2>
+      <p className="mt-2 text-[13px] text-neutral-600 dark:text-neutral-400 sm:text-sm">
+        Submit your name, site URL, and graduation year. The review process is manual before it goes live.
       </p>
 
       {!turnstileEnabled && process.env.NODE_ENV === "production" && (
-        <p className="mt-3 text-sm text-amber-800">
+        <p className="mt-3 text-sm text-amber-800 dark:text-amber-200/90">
           The join form is not configured for this deployment (set Turnstile environment variables).
         </p>
       )}
 
       <form className="mt-4 flex flex-col gap-3" onSubmit={onSubmit}>
         <div>
-          <label htmlFor={`${baseId}-name`} className="block text-xs font-medium text-neutral-700">
+          <label htmlFor={`${baseId}-name`} className="block text-xs font-medium text-neutral-700 dark:text-neutral-300">
             Name
           </label>
           <input
@@ -139,12 +148,12 @@ export function JoinForm() {
             autoComplete="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="mt-1 w-full rounded border border-neutral-300 px-2 py-1.5 text-sm text-neutral-900 shadow-sm focus:border-maroon focus:outline-none focus:ring-1 focus:ring-maroon"
+            className="mt-1 w-full rounded border border-neutral-300 bg-white px-2 py-1.5 text-sm text-neutral-900 shadow-sm focus:border-maroon focus:outline-none focus:ring-1 focus:ring-maroon dark:border-neutral-600 dark:bg-neutral-950 dark:text-neutral-100"
             maxLength={120}
           />
         </div>
         <div>
-          <label htmlFor={`${baseId}-website`} className="block text-xs font-medium text-neutral-700">
+          <label htmlFor={`${baseId}-website`} className="block text-xs font-medium text-neutral-700 dark:text-neutral-300">
             Website (https)
           </label>
           <input
@@ -155,11 +164,11 @@ export function JoinForm() {
             placeholder="https://yoursite.com"
             value={website}
             onChange={(e) => setWebsite(e.target.value)}
-            className="mt-1 w-full rounded border border-neutral-300 px-2 py-1.5 text-sm text-neutral-900 shadow-sm focus:border-maroon focus:outline-none focus:ring-1 focus:ring-maroon"
+            className="mt-1 w-full rounded border border-neutral-300 bg-white px-2 py-1.5 text-sm text-neutral-900 shadow-sm focus:border-maroon focus:outline-none focus:ring-1 focus:ring-maroon dark:border-neutral-600 dark:bg-neutral-950 dark:text-neutral-100"
           />
         </div>
         <div>
-          <label htmlFor={`${baseId}-year`} className="block text-xs font-medium text-neutral-700">
+          <label htmlFor={`${baseId}-year`} className="block text-xs font-medium text-neutral-700 dark:text-neutral-300">
             Graduation year
           </label>
           <input
@@ -172,7 +181,7 @@ export function JoinForm() {
             placeholder="2028"
             value={year}
             onChange={(e) => setYear(e.target.value)}
-            className="mt-1 w-full max-w-[8rem] rounded border border-neutral-300 px-2 py-1.5 text-sm text-neutral-900 shadow-sm focus:border-maroon focus:outline-none focus:ring-1 focus:ring-maroon"
+            className="mt-1 w-full max-w-[8rem] rounded border border-neutral-300 bg-white px-2 py-1.5 text-sm text-neutral-900 shadow-sm focus:border-maroon focus:outline-none focus:ring-1 focus:ring-maroon dark:border-neutral-600 dark:bg-neutral-950 dark:text-neutral-100"
             maxLength={4}
           />
         </div>
@@ -189,7 +198,7 @@ export function JoinForm() {
         )}
 
         {turnstileEnabled && turnstileError && (
-          <p className="text-sm text-amber-900" role="status">
+          <p className="text-sm text-amber-900 dark:text-amber-200/90" role="status">
             {turnstileError}
           </p>
         )}
@@ -204,7 +213,7 @@ export function JoinForm() {
       </form>
 
       {status === "success" && prUrl && (
-        <p className="mt-4 text-sm text-neutral-700">
+        <p className="mt-4 text-sm text-neutral-700 dark:text-neutral-300">
           Thanks! Your request was submitted as a pull request:{" "}
           <a href={prUrl} className="text-maroon underline underline-offset-2" target="_blank" rel="noopener noreferrer">
             view on GitHub
@@ -214,7 +223,7 @@ export function JoinForm() {
       )}
 
       {status === "error" && message && (
-        <p className="mt-4 text-sm text-red-800" role="alert">
+        <p className="mt-4 text-sm text-red-800 dark:text-red-300" role="alert">
           {message}
         </p>
       )}
