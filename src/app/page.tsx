@@ -87,7 +87,8 @@ export default function Home() {
           Hope you like it! If you have any questions/feedback, feel free to reach out.
         </p>
         <p>
-          - Isaac
+          Gig'em,
+          Isaac
         </p>
         <p>
           <a
