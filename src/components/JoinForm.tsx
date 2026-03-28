@@ -6,7 +6,15 @@ import { useCallback, useId, useRef, useState } from "react";
 declare global {
   interface Window {
     turnstile?: {
-      render: (el: HTMLElement, opts: { sitekey: string; callback: (token: string) => void }) => void;
+      render: (
+        el: HTMLElement,
+        opts: {
+          sitekey: string;
+          callback: (token: string) => void;
+          "error-callback"?: () => void;
+          "expired-callback"?: () => void;
+        },
+      ) => void;
     };
   }
 }
@@ -25,16 +33,37 @@ export function JoinForm() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
   const [prUrl, setPrUrl] = useState<string | null>(null);
+  const [turnstileError, setTurnstileError] = useState<string | null>(null);
 
   const onTurnstileLoad = useCallback(() => {
-    if (turnstileRendered.current || !turnstileRef.current || !window.turnstile || !siteKey) {
-      return;
+    const run = () => {
+      if (turnstileRendered.current || !turnstileRef.current || !window.turnstile || !siteKey) {
+        return;
+      }
+      turnstileRendered.current = true;
+      setTurnstileError(null);
+      window.turnstile!.render(turnstileRef.current, {
+        sitekey: siteKey,
+        callback: (token: string) => {
+          setTurnstileToken(token);
+          setTurnstileError(null);
+        },
+        "error-callback": () => {
+          setTurnstileToken("");
+          setTurnstileError(
+            "Verification could not load. Check that this host is allowed in the Turnstile widget domains, or try disabling ad blockers.",
+          );
+        },
+        "expired-callback": () => {
+          setTurnstileToken("");
+        },
+      });
+    };
+    if (turnstileRef.current) {
+      run();
+    } else {
+      requestAnimationFrame(run);
     }
-    turnstileRendered.current = true;
-    window.turnstile.render(turnstileRef.current, {
-      sitekey: siteKey,
-      callback: (token: string) => setTurnstileToken(token),
-    });
   }, []);
 
   async function onSubmit(e: React.FormEvent) {
@@ -150,13 +179,19 @@ export function JoinForm() {
 
         {turnstileEnabled && (
           <>
+            <div ref={turnstileRef} className="min-h-[65px]" />
             <Script
               src="https://challenges.cloudflare.com/turnstile/v0/api.js"
-              strategy="lazyOnload"
+              strategy="afterInteractive"
               onLoad={onTurnstileLoad}
             />
-            <div ref={turnstileRef} className="min-h-[65px]" />
           </>
+        )}
+
+        {turnstileEnabled && turnstileError && (
+          <p className="text-sm text-amber-900" role="status">
+            {turnstileError}
+          </p>
         )}
 
         <button

@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "export",
+  // Not `output: "export"` — we need serverless API routes (e.g. /api/webring/join) on Vercel.
   images: {
     unoptimized: true,
   },
