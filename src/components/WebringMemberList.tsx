@@ -55,16 +55,31 @@ function memberMatchesQuery(m: WebringMember, q: string): boolean {
   return false;
 }
 
+type SortMode = "default" | "alpha";
+
 type WebringMemberListProps = {
   members: WebringMember[];
 };
 
+const inputLikeClassName =
+  "w-full rounded border border-neutral-300 bg-white px-2 py-1.5 text-sm text-neutral-900 shadow-sm focus:border-maroon focus:outline-none focus:ring-1 focus:ring-maroon dark:border-neutral-600 dark:bg-neutral-950 dark:text-neutral-100";
+
 export function WebringMemberList({ members }: WebringMemberListProps) {
   const baseId = useId();
   const [query, setQuery] = useState("");
+  const [sortMode, setSortMode] = useState<SortMode>("default");
 
   const filtered = useMemo(() => members.filter((m) => memberMatchesQuery(m, query)), [members, query]);
-  const byYear = useMemo(() => membersByYear(filtered), [filtered]);
+  const byYear = useMemo(() => {
+    const grouped = membersByYear(filtered);
+    if (sortMode !== "alpha") return grouped;
+    return grouped.map(({ year, members: yearMembers }) => ({
+      year,
+      members: [...yearMembers].sort((a, b) =>
+        a.name.localeCompare(b.name, undefined, { sensitivity: "base" }),
+      ),
+    }));
+  }, [filtered, sortMode]);
   const totalCount = members.length;
   const filteredCount = filtered.length;
   const isSearching = query.trim().length > 0;
@@ -87,20 +102,37 @@ export function WebringMemberList({ members }: WebringMemberListProps) {
             </>
           )}
         </p>
-        <div className="w-full sm:max-w-xs">
-          <label htmlFor={`${baseId}-search`} className="sr-only">
-            Search members by name, year, or URL
-          </label>
-          <input
-            id={`${baseId}-search`}
-            type="search"
-            name="member-search"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search name, year, or URL…"
-            autoComplete="off"
-            className="w-full rounded border border-neutral-300 bg-white px-2 py-1.5 text-sm text-neutral-900 shadow-sm placeholder:text-neutral-400 focus:border-maroon focus:outline-none focus:ring-1 focus:ring-maroon dark:border-neutral-600 dark:bg-neutral-950 dark:text-neutral-100 dark:placeholder:text-neutral-500"
-          />
+        <div className="flex w-full flex-col gap-2 sm:max-w-md sm:flex-row sm:items-end sm:gap-2">
+          <div className="w-full sm:min-w-[11rem] sm:max-w-[12rem]">
+            <label htmlFor={`${baseId}-sort`} className="sr-only">
+              Sort members
+            </label>
+            <select
+              id={`${baseId}-sort`}
+              name="member-sort"
+              value={sortMode}
+              onChange={(e) => setSortMode(e.target.value as SortMode)}
+              className={inputLikeClassName}
+            >
+              <option value="default">Default order</option>
+              <option value="alpha">Alphabetical (A–Z)</option>
+            </select>
+          </div>
+          <div className="w-full sm:max-w-xs sm:flex-1">
+            <label htmlFor={`${baseId}-search`} className="sr-only">
+              Search members by name, year, or URL
+            </label>
+            <input
+              id={`${baseId}-search`}
+              type="search"
+              name="member-search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search name, year, or URL…"
+              autoComplete="off"
+              className={`${inputLikeClassName} placeholder:text-neutral-400 dark:placeholder:text-neutral-500`}
+            />
+          </div>
         </div>
       </div>
 
