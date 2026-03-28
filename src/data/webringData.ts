@@ -36,4 +36,9 @@ export const webringData: WebringMember[] = [
     website: "https://sites.google.com/view/tiffanyyin/home",
     year: "2027"
   },
+  {
+    name: "Vedant Soni",
+    website: "https://vedantsoni.com/",
+    year: "2028"
+  },
 ];
