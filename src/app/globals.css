@@ -5,11 +5,14 @@
 :root {
   --background: #fafafa;
   --foreground: #1a1a1a;
+  --maroon: #500000;
 }
 
 .dark {
   --background: #0a0a0a;
   --foreground: #e5e5e5;
+  /* Lifted from #500000 so links and accents read clearly on dark UI */
+  --maroon: #b03c46;
 }
 
 body {

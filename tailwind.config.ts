@@ -10,7 +10,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        maroon: "#500000",
+        maroon: "var(--maroon)",
         "aggie-grey": "#999999",
         white: "#FFFFFF",
       },
