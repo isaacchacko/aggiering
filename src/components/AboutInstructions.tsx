@@ -1,6 +1,9 @@
 import { CodeBlock } from "@/components/CodeBlock";
 import { GITHUB_REPO, GITHUB_WEBRING_DATA, SITE_ORIGIN } from "@/lib/site";
 
+const stickySectionHeading =
+  "sticky top-0 z-10 -mx-4 border-b border-neutral-200 bg-[var(--background)] px-4 py-2 text-base font-semibold text-neutral-900 dark:border-neutral-700 dark:text-neutral-100 sm:text-lg";
+
 const EXAMPLE_ENTRY = `{
   name: "Your Name",
   website: "https://yoursite.com",
@@ -75,9 +78,7 @@ export function AboutInstructions() {
         id="add-your-website-manually"
         className="mt-10 scroll-mt-8 space-y-4 text-neutral-600 dark:text-neutral-400 sm:mt-12 sm:space-y-5"
       >
-        <h2 className="text-base font-semibold text-neutral-900 dark:text-neutral-100 sm:text-lg">
-          Add your website manually
-        </h2>
+        <h2 className={stickySectionHeading}>Add your website manually</h2>
         <p>
           Prefer to edit the repo yourself, or need a fork-based PR? If this is your first time making a PR, no
           worries!
@@ -100,12 +101,21 @@ export function AboutInstructions() {
             request.
           </li>
           <li>
-            Add             <strong className="font-semibold text-neutral-800 dark:text-neutral-200">one</strong> object at the{" "}
+            Add <strong className="font-semibold text-neutral-800 dark:text-neutral-200">one</strong> object at the{" "}
             <strong className="font-semibold text-neutral-800 dark:text-neutral-200">bottom</strong> of the{" "}
-            <code className="text-[0.95em]">webringData</code> array (keep the trailing comma style consistent with the
-            file).
+            <code className="text-[0.95em]">webringData</code> array with only{" "}
+            <code className="text-[0.95em]">name</code>, <code className="text-[0.95em]">website</code>, and{" "}
+            <code className="text-[0.95em]">year</code> (same shape as the join form; do not add extra fields). Keep the
+            trailing comma style consistent with the file.
           </li>
-          <li>Submit the PR.</li>
+          <li>
+            Use <code className="text-[0.95em]">https</code> for <code className="text-[0.95em]">website</code> and make
+            sure the site loads for reviewers without a login wall.
+          </li>
+          <li>
+            Submit the pull request. In the PR <strong className="font-semibold text-neutral-800 dark:text-neutral-200">description</strong>, include a public{" "} link to a profile to
+            help verify who you are and your Texas A&amp;M affiliation (e.g. LinkedIn).
+          </li>
         </ol>
         <div className="space-y-2">
           <p className="font-medium text-neutral-800 dark:text-neutral-200">Example entry:</p>
@@ -127,9 +137,7 @@ export function AboutInstructions() {
         id="adding-a-link-to-your-website"
         className="mt-8 scroll-mt-8 space-y-4 text-neutral-600 dark:text-neutral-400 sm:mt-10 sm:space-y-5"
       >
-        <h2 className="text-base font-semibold text-neutral-900 dark:text-neutral-100 sm:text-lg">
-          Adding a link to your website
-        </h2>
+        <h2 className={stickySectionHeading}>Adding a link to your website</h2>
         <p>
           Use a normal link to{" "}
           <span className="font-mono text-[0.95em] text-neutral-800 dark:text-neutral-200">{SITE_ORIGIN}</span>. To show

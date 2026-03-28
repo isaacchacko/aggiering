@@ -16,12 +16,14 @@ describe("validateJoinInput", () => {
     const r = validateJoinInput({
       name: "Test",
       website: "https://example.com",
+      verificationProfileUrl: "https://www.linkedin.com/in/example",
       year: "2026",
     });
     expect(r.ok).toBe(true);
     if (r.ok) {
       expect(r.normalized.name).toBe("Test");
       expect(r.normalized.year).toBe("2026");
+      expect(r.normalized.verificationProfileUrl).toContain("linkedin.com");
     }
   });
 
@@ -29,6 +31,7 @@ describe("validateJoinInput", () => {
     const r = validateJoinInput({
       name: "Test",
       website: "http://example.com",
+      verificationProfileUrl: "https://linkedin.com/in/x",
       year: "2026",
     });
     expect(r.ok).toBe(false);
@@ -38,7 +41,27 @@ describe("validateJoinInput", () => {
     const r = validateJoinInput({
       name: "Test",
       website: "https://example.com",
+      verificationProfileUrl: "https://linkedin.com/in/x",
       year: "26",
+    });
+    expect(r.ok).toBe(false);
+  });
+
+  it("rejects missing verification profile", () => {
+    const r = validateJoinInput({
+      name: "Test",
+      website: "https://example.com",
+      year: "2026",
+    });
+    expect(r.ok).toBe(false);
+  });
+
+  it("rejects http verification profile", () => {
+    const r = validateJoinInput({
+      name: "Test",
+      website: "https://example.com",
+      verificationProfileUrl: "http://linkedin.com/in/x",
+      year: "2026",
     });
     expect(r.ok).toBe(false);
   });

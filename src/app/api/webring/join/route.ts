@@ -82,11 +82,13 @@ export async function POST(request: NextRequest) {
   const octokit = new Octokit({ auth: ghToken });
 
   try {
+    const { name, website, year, verificationProfileUrl } = validated.normalized;
     const { htmlUrl } = await createJoinPullRequest({
       octokit,
       owner,
       repo,
-      member: validated.normalized,
+      member: { name, website, year },
+      verificationProfileUrl,
     });
     return NextResponse.json({ prUrl: htmlUrl });
   } catch (err) {

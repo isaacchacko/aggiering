@@ -22,8 +22,10 @@ export async function createJoinPullRequest(params: {
   owner: string;
   repo: string;
   member: { name: string; website: string; year: string };
+  /** For PR description only; not written to webringData. */
+  verificationProfileUrl: string;
 }): Promise<{ htmlUrl: string }> {
-  const { octokit, owner, repo, member } = params;
+  const { octokit, owner, repo, member, verificationProfileUrl } = params;
 
   const { data: file } = await octokit.rest.repos.getContent({
     owner,
@@ -80,7 +82,8 @@ export async function createJoinPullRequest(params: {
 
 - **Name:** ${member.name}
 - **Website:** ${member.website}
-- **Year:** ${member.year}`,
+- **Year:** ${member.year}
+- **Verification profile:** ${verificationProfileUrl}`,
   });
 
   return { htmlUrl: pr.html_url };

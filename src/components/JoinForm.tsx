@@ -33,6 +33,7 @@ export function JoinForm({ isPageLead }: JoinFormProps) {
 
   const [name, setName] = useState("");
   const [website, setWebsite] = useState("");
+  const [verificationProfileUrl, setVerificationProfileUrl] = useState("");
   const [year, setYear] = useState("");
   const [turnstileToken, setTurnstileToken] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -84,6 +85,7 @@ export function JoinForm({ isPageLead }: JoinFormProps) {
         body: JSON.stringify({
           name,
           website,
+          verificationProfileUrl,
           year,
           turnstileToken,
         }),
@@ -101,6 +103,7 @@ export function JoinForm({ isPageLead }: JoinFormProps) {
         setPrUrl(data.prUrl);
         setName("");
         setWebsite("");
+        setVerificationProfileUrl("");
         setYear("");
         setTurnstileToken("");
         turnstileRendered.current = false;
@@ -124,10 +127,6 @@ export function JoinForm({ isPageLead }: JoinFormProps) {
     <section
       className={`${sectionMargin} rounded-lg border border-neutral-200 bg-white p-4 shadow-sm dark:border-neutral-700 dark:bg-neutral-900 sm:p-5`}
     >
-      <h2 className="text-base font-semibold text-neutral-900 dark:text-neutral-100 sm:text-lg">Add your website</h2>
-      <p className="mt-2 text-[13px] text-neutral-600 dark:text-neutral-400 sm:text-sm">
-        Submit your name, site URL, and graduation year. The review process is manual before it goes live.
-      </p>
 
       {!turnstileEnabled && process.env.NODE_ENV === "production" && (
         <p className="mt-3 text-sm text-amber-800 dark:text-amber-200/90">
@@ -135,7 +134,7 @@ export function JoinForm({ isPageLead }: JoinFormProps) {
         </p>
       )}
 
-      <form className="mt-4 flex flex-col gap-3" onSubmit={onSubmit}>
+      <form className="flex flex-col gap-3" onSubmit={onSubmit}>
         <div>
           <label htmlFor={`${baseId}-name`} className="block text-xs font-medium text-neutral-700 dark:text-neutral-300">
             Name
@@ -166,6 +165,28 @@ export function JoinForm({ isPageLead }: JoinFormProps) {
             onChange={(e) => setWebsite(e.target.value)}
             className="mt-1 w-full rounded border border-neutral-300 bg-white px-2 py-1.5 text-sm text-neutral-900 shadow-sm focus:border-maroon focus:outline-none focus:ring-1 focus:ring-maroon dark:border-neutral-600 dark:bg-neutral-950 dark:text-neutral-100"
           />
+        </div>
+        <div>
+          <label
+            htmlFor={`${baseId}-profile`}
+            className="block text-xs font-medium text-neutral-700 dark:text-neutral-300"
+          >
+            Verification profile (https)
+          </label>
+          <input
+            id={`${baseId}-profile`}
+            name="verificationProfileUrl"
+            type="url"
+            required
+            placeholder="https://www.linkedin.com/in/…"
+            value={verificationProfileUrl}
+            onChange={(e) => setVerificationProfileUrl(e.target.value)}
+            className="mt-1 w-full rounded border border-neutral-300 bg-white px-2 py-1.5 text-sm text-neutral-900 shadow-sm focus:border-maroon focus:outline-none focus:ring-1 focus:ring-maroon dark:border-neutral-600 dark:bg-neutral-950 dark:text-neutral-100"
+          />
+          <p className="mt-1 text-[12px] text-neutral-500 dark:text-neutral-500">
+            A public page that shows your name and helps confirm you&apos;re affiliated with Texas A&amp;M (LinkedIn,
+            GitHub, etc.). Used only for verification
+          </p>
         </div>
         <div>
           <label htmlFor={`${baseId}-year`} className="block text-xs font-medium text-neutral-700 dark:text-neutral-300">

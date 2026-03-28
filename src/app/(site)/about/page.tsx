@@ -36,7 +36,9 @@ export default function AboutPage() {
         <Link href="/add-website" className="text-maroon underline underline-offset-2">
           Add Website
         </Link>{" "}
-        tab and submit the form. Afterwards, consider linking to{" "}
+        tab and submit the form—you&apos;ll include your site, graduation year, and a public profile link (e.g.
+        LinkedIn) so maintainers can verify you; that link stays on GitHub only, not on the member list. Afterwards,
+        consider linking to{" "}
         <a href={SITE_ORIGIN} className="text-maroon underline underline-offset-2">
           aggier.ing
         </a>{" "}
