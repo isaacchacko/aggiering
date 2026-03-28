@@ -1,4 +1,4 @@
-![aggier.ing splash graphic](./public/splash.svg)
+![aggier.ing Open Graph graphic](./public/og.svg)
 
 # [aggier.ing](https://aggier.ing)
 
