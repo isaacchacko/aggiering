@@ -21,4 +21,9 @@ export const webringData: WebringMember[] = [
     website: "https://allenthomas.dev",
     year: "2028"
   },
+  {
+    name: "123",
+    website: "https://123.com/",
+    year: "1232"
+  },
 ];
