@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
+import { CloudflareWebAnalytics } from "@/components/CloudflareWebAnalytics";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { SITE_ORIGIN } from "@/lib/site";
@@ -45,6 +46,7 @@ export default function RootLayout({
       <body className="min-h-screen font-sans antialiased transition-colors">
         <ThemeProvider>{children}</ThemeProvider>
         <Analytics />
+        <CloudflareWebAnalytics />
       </body>
     </html>
   );

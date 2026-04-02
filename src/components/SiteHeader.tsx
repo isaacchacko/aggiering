@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ViewCounter } from "@/components/ViewCounter";
 import { GITHUB_REPO } from "@/lib/site";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
@@ -48,7 +49,8 @@ export function SiteHeader() {
             <span>aggier.ing</span>
           </Link>
         </h1>
-        <div className="flex shrink-0 items-center gap-0.5 sm:gap-1">
+        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+          <ViewCounter />
           <ThemeToggle />
           <a
             href={GITHUB_REPO}
