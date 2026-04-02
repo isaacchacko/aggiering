@@ -66,4 +66,9 @@ export const webringData: WebringMember[] = [
     website: "https://yashramkulkarni.vercel.app/",
     year: "2029"
   },
+  {
+    name: "Kiara Ramon-Lozano",
+    website: "https://sites.google.com/tamu.edu/themultitaskersmentor",
+    year: "2029"
+  }
 ];
