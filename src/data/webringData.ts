@@ -70,7 +70,7 @@ export const webringData: WebringMember[] = [
     name: "Kiara Ramon-Lozano",
     website: "https://sites.google.com/tamu.edu/themultitaskersmentor",
     year: "2029"
-  }
+  },
   {
     name: "Christine Chacko",
     website: "https://christinechacko.com/",
