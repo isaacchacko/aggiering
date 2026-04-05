@@ -71,4 +71,9 @@ export const webringData: WebringMember[] = [
     website: "https://sites.google.com/tamu.edu/themultitaskersmentor",
     year: "2029"
   }
+  {
+    name: "Christine Chacko",
+    website: "https://christinechacko.com/",
+    year: "2021"
+  },
 ];
