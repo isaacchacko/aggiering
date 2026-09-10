@@ -96,4 +96,9 @@ export const webringData: WebringMember[] = [
     website: "https://dvxb.io/",
     year: "2029"
   },
+  {
+    name: "William Lam",
+    website: "https://www.williammlam.com/",
+    year: "2028"
+  },
 ];
